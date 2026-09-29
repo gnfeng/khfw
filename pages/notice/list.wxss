@@ -1,0 +1,17 @@
+/* pages/notice/list.wxss */
+.nt-item {
+  margin-bottom: 18rpx;
+}
+.nt-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 8rpx;
+}
+.nt-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1a5276;
+  flex: 1;
+  margin-right: 16rpx;
+}

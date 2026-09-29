@@ -1,0 +1,23 @@
+<!-- pages/notice/detail.wxml -->
+<view class="container" wx:if="{{notice}}">
+  <view class="page-header">
+    <view class="h-title">{{notice.title}}</view>
+    <view class="h-sub">{{notice.publisher}}</view>
+  </view>
+
+  <view class="card" style="margin-top:24rpx;">
+    <text class="tag {{notice.level==='urgent'?'tag-red':(notice.level==='important'?'tag-orange':'')}}">
+      {{notice.level==='urgent'?'紧急':(notice.level==='important'?'重要':'普通')}}
+    </text>
+    <view class="nt-content">{{notice.content}}</view>
+    <view class="divider"></view>
+    <view class="muted">发布时间：{{notice.publishAt}}</view>
+    <view class="muted">发布人：{{notice.publisher}}</view>
+  </view>
+
+  <view class="btn-primary" bindtap="back">返回</view>
+</view>
+
+<view class="container" wx:else>
+  <view class="card">通知加载中…</view>
+</view>

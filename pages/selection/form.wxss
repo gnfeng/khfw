@@ -1,0 +1,26 @@
+/* pages/selection/form.wxss */
+.field {
+  display: flex;
+  align-items: center;
+  padding: 14rpx 0;
+}
+.field .label {
+  width: 160rpx;
+  color: #1a5276;
+  font-weight: 600;
+  flex-shrink: 0;
+  font-size: 28rpx;
+}
+.field .input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #1b2631;
+}
+.sub-tip {
+  background: #fdebd0;
+  color: #ca6f1e;
+  font-size: 24rpx;
+  padding: 14rpx 20rpx;
+  border-radius: 10rpx;
+  margin: 6rpx 0;
+}

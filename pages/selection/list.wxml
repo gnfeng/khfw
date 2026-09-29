@@ -1,0 +1,27 @@
+<!-- pages/selection/list.wxml -->
+<view class="container">
+  <view class="page-header">
+    <view class="h-title">选课 / 报名</view>
+    <view class="h-sub">记录学生选课，代课单独标注</view>
+  </view>
+
+  <view class="tabs">
+    <view class="tab {{filter==='all'?'on':''}}" data-f="all" bindtap="onFilter">全部</view>
+    <view class="tab {{filter==='normal'?'on':''}}" data-f="normal" bindtap="onFilter">正常</view>
+    <view class="tab {{filter==='substitute'?'on':''}}" data-f="substitute" bindtap="onFilter">代课</view>
+  </view>
+
+  <view style="margin-top:12rpx;">
+    <view class="sel-item card" wx:for="{{display}}" wx:key="id">
+      <view class="sel-top">
+        <text class="sel-name">{{item.studentName}}</text>
+        <text class="tag {{item.status==='substitute'?'tag-orange':'tag-green'}}">{{item.status==='substitute'?'代课':'正常'}}</text>
+      </view>
+      <view class="muted">{{item.className}} · {{item.courseName}}</view>
+      <view class="muted" wx:if="{{item.status==='substitute' && item.substitute}}">被代课人：{{item.substitute.byCourseTeacher}} → 代课人：{{item.substitute.byActualTeacher}}</view>
+      <view class="muted">报名日期：{{item.selectedAt}}</view>
+    </view>
+  </view>
+
+  <view class="btn-primary" bindtap="goAdd" style="margin-top:8rpx;">＋ 新增报名</view>
+</view>

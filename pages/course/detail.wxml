@@ -1,0 +1,59 @@
+<!-- pages/course/detail.wxml -->
+<view class="container">
+  <view class="page-header">
+    <view class="h-title">{{isEdit ? '编辑课程' : '新增课程'}}</view>
+    <view class="h-sub">课程信息将用于选课与津贴预算</view>
+  </view>
+
+  <view class="card" style="margin-top:24rpx;">
+    <view class="field">
+      <text class="label">课程名称</text>
+      <input class="input" placeholder="如：创意美术" value="{{form.name}}" data-field="name" bindinput="onInput" />
+    </view>
+    <view class="divider"></view>
+    <view class="field">
+      <text class="label">课程类型</text>
+      <radio-group bindchange="onType">
+        <label><radio value="特色课" checked="{{form.type==='特色课'}}" color="#2471a3"/>特色课</label>
+        <label style="margin-left:30rpx;"><radio value="非特色课" checked="{{form.type==='非特色课'}}" color="#2471a3"/>非特色课</label>
+      </radio-group>
+    </view>
+    <view class="divider"></view>
+    <view class="field">
+      <text class="label">授课教师</text>
+      <input class="input" placeholder="课表原定教师" value="{{form.teacher}}" data-field="teacher" bindinput="onInput" />
+    </view>
+    <view class="divider"></view>
+    <view class="field">
+      <text class="label">上课地点</text>
+      <input class="input" placeholder="如：美术室(二)" value="{{form.location}}" data-field="location" bindinput="onInput" />
+    </view>
+    <view class="divider"></view>
+    <view class="field">
+      <text class="label">年级范围</text>
+      <input class="input" placeholder="如：一~三年级" value="{{form.gradeScope}}" data-field="gradeScope" bindinput="onInput" />
+    </view>
+    <view class="divider"></view>
+    <view class="field">
+      <text class="label">上课星期</text>
+      <input class="input" placeholder="如：周一" value="{{form.weekday}}" data-field="weekday" bindinput="onInput" />
+    </view>
+    <view class="divider"></view>
+    <view class="field">
+      <text class="label">时段</text>
+      <input class="input" placeholder="如：16:30-17:30" value="{{form.timeSlot}}" data-field="timeSlot" bindinput="onInput" />
+    </view>
+    <view class="divider"></view>
+    <view class="field">
+      <text class="label">招生容量</text>
+      <input class="input" type="number" placeholder="如：30" value="{{form.capacity}}" data-field="capacity" bindinput="onInput" />
+    </view>
+    <view class="divider"></view>
+    <view class="field">
+      <text class="label">教学周数</text>
+      <input class="input" type="number" placeholder="预算基准周数" value="{{form.weeks}}" data-field="weeks" bindinput="onInput" />
+    </view>
+  </view>
+
+  <view class="btn-primary" bindtap="save">保存</view>
+</view>

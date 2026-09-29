@@ -1,0 +1,18 @@
+<!-- pages/course/list.wxml -->
+<view class="container">
+  <view class="page-header">
+    <view class="h-title">课程管理</view>
+    <view class="h-sub">广南县城区第三小学校 · 课后服务</view>
+  </view>
+
+  <view style="margin-top:24rpx;">
+    <course-card
+      wx:for="{{courses}}"
+      wx:key="id"
+      course="{{item}}"
+      bind:tapcourse="onTapCourse"
+    />
+  </view>
+
+  <view class="btn-primary" bindtap="goAdd" style="margin-top:12rpx;">＋ 新增课程</view>
+</view>

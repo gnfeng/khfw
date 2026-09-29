@@ -1,0 +1,16 @@
+<!-- components/course-card/course-card.wxml -->
+<view class="cc-card" bindtap="onTap">
+  <view class="cc-top">
+    <text class="cc-name">{{course.name}}</text>
+    <text class="tag {{course.type === '特色课' ? '' : 'tag-orange'}}">{{course.type}}</text>
+  </view>
+  <view class="cc-row"><text class="muted">教师</text><text class="cc-val">{{course.teacher}}</text></view>
+  <view class="cc-row"><text class="muted">地点</text><text class="cc-val">{{course.location}}</text></view>
+  <view class="cc-row"><text class="muted">时段</text><text class="cc-val">{{course.weekday}} {{course.timeSlot}}</text></view>
+  <view class="cc-bar">
+    <text class="muted">报名 {{course.enrolled}}/{{course.capacity}}</text>
+    <text class="tag {{course.status === 'open' ? 'tag-green' : (course.status === 'full' ? 'tag-red' : 'tag-orange')}}">
+      {{course.status === 'open' ? '招生中' : (course.status === 'full' ? '满额' : '已结课')}}
+    </text>
+  </view>
+</view>

@@ -1,0 +1,51 @@
+<!-- pages/index/index.wxml -->
+<view class="container">
+  <view class="page-header">
+    <view class="h-title">{{schoolName}}</view>
+    <view class="h-sub">课后服务专干助手 · 数字化工作台</view>
+  </view>
+
+  <view class="stat-row">
+    <view class="stat">
+      <text class="num">{{stats.courses}}</text>
+      <text class="lbl">课程</text>
+    </view>
+    <view class="stat">
+      <text class="num">{{stats.selections}}</text>
+      <text class="lbl">报名</text>
+    </view>
+    <view class="stat">
+      <text class="num">{{stats.notices}}</text>
+      <text class="lbl">通知</text>
+    </view>
+  </view>
+
+  <view class="menu">
+    <view class="menu-item" data-url="/pages/course/list" bindtap="go">
+      <view class="mi-badge">课</view>
+      <view class="mi-text">
+        <view class="mi-title">课程管理</view>
+        <view class="muted">特色课 / 非特色课编排</view>
+      </view>
+    </view>
+    <view class="menu-item" data-url="/pages/selection/list" bindtap="go">
+      <view class="mi-badge mi-blue">选</view>
+      <view class="mi-text">
+        <view class="mi-title">选课报名</view>
+        <view class="muted">报名记录 / 代课标注</view>
+      </view>
+    </view>
+    <view class="menu-item" data-url="/pages/notice/list" bindtap="go">
+      <view class="mi-badge mi-light">通</view>
+      <view class="mi-text">
+        <view class="mi-title">家校通知</view>
+        <view class="muted">公告发布与查阅</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card contact">
+    <view class="muted">课后服务对接人</view>
+    <view class="ct-name">{{contact}}</view>
+  </view>
+</view>

@@ -1,0 +1,44 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/course/list",
+    "pages/course/detail",
+    "pages/selection/list",
+    "pages/selection/form",
+    "pages/notice/list",
+    "pages/notice/detail"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#1a5276",
+    "navigationBarTitleText": "课后服务专干助手",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#eaf2f8",
+    "backgroundTextStyle": "light"
+  },
+  "tabBar": {
+    "color": "#5d6d7e",
+    "selectedColor": "#1a5276",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/course/list",
+        "text": "课程"
+      },
+      {
+        "pagePath": "pages/selection/list",
+        "text": "选课"
+      },
+      {
+        "pagePath": "pages/notice/list",
+        "text": "通知"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

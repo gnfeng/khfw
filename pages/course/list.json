@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "course-card": "/components/course-card/course-card"
+  },
+  "navigationBarTitleText": "课程管理"
+}

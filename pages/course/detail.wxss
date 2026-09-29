@@ -1,0 +1,18 @@
+/* pages/course/detail.wxss */
+.field {
+  display: flex;
+  align-items: center;
+  padding: 14rpx 0;
+}
+.field .label {
+  width: 160rpx;
+  color: #1a5276;
+  font-weight: 600;
+  flex-shrink: 0;
+  font-size: 28rpx;
+}
+.field .input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #1b2631;
+}

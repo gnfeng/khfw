@@ -1,0 +1,8 @@
+/* pages/notice/detail.wxss */
+.nt-content {
+  font-size: 29rpx;
+  line-height: 1.9;
+  color: #1b2631;
+  margin: 18rpx 0;
+  white-space: pre-wrap;
+}

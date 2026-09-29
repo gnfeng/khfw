@@ -1,0 +1,19 @@
+<!-- pages/notice/list.wxml -->
+<view class="container">
+  <view class="page-header">
+    <view class="h-title">家校通知</view>
+    <view class="h-sub">课后服务相关公告发布与查阅</view>
+  </view>
+
+  <view style="margin-top:24rpx;">
+    <view class="nt-item card" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" bindtap="onTap">
+      <view class="nt-top">
+        <text class="nt-title">{{item.title}}</text>
+        <text class="tag {{item.level==='urgent'?'tag-red':(item.level==='important'?'tag-orange':'')}}">
+          {{item.level==='urgent'?'紧急':(item.level==='important'?'重要':'普通')}}
+        </text>
+      </view>
+      <view class="muted">{{item.publisher}} · {{item.publishAt}}</view>
+    </view>
+  </view>
+</view>

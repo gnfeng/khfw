@@ -1,0 +1,47 @@
+<!-- pages/selection/form.wxml -->
+<view class="container">
+  <view class="page-header">
+    <view class="h-title">新增报名</view>
+    <view class="h-sub">代课请如实填写被代课人与代课人</view>
+  </view>
+
+  <view class="card" style="margin-top:24rpx;">
+    <view class="field">
+      <text class="label">学生姓名</text>
+      <input class="input" placeholder="请输入" value="{{form.studentName}}" data-field="studentName" bindinput="onInput" />
+    </view>
+    <view class="divider"></view>
+    <view class="field">
+      <text class="label">班级</text>
+      <input class="input" placeholder="如：三(2)班" value="{{form.className}}" data-field="className" bindinput="onInput" />
+    </view>
+    <view class="divider"></view>
+    <view class="field">
+      <text class="label">选择课程</text>
+      <picker mode="selector" range="{{courses}}" range-key="name" bindchange="onCourse">
+        <view class="input">{{form.courseName || '请选择课程'}}</view>
+      </picker>
+    </view>
+    <view class="divider"></view>
+    <view class="field">
+      <text class="label">是否代课</text>
+      <switch checked="{{form.isSubstitute}}" color="#2471a3" bindchange="onSwitch" />
+    </view>
+
+    <block wx:if="{{form.isSubstitute}}">
+      <view class="divider"></view>
+      <view class="sub-tip">⚠️ 代课口径：被代课人填课表原定教师，代课人填实际上课教师</view>
+      <view class="field">
+        <text class="label">被代课人</text>
+        <input class="input" placeholder="课表原定教师" value="{{form.byCourseTeacher}}" data-field="byCourseTeacher" bindinput="onInput" />
+      </view>
+      <view class="divider"></view>
+      <view class="field">
+        <text class="label">代课人</text>
+        <input class="input" placeholder="实际上课教师" value="{{form.byActualTeacher}}" data-field="byActualTeacher" bindinput="onInput" />
+      </view>
+    </block>
+  </view>
+
+  <view class="btn-primary" bindtap="submit">提交报名</view>
+</view>

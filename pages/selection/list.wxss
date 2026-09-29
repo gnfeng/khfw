@@ -1,0 +1,35 @@
+/* pages/selection/list.wxss */
+.tabs {
+  display: flex;
+  margin-top: 24rpx;
+  background: #ffffff;
+  border: 1rpx solid #b0c4de;
+  border-radius: 14rpx;
+  overflow: hidden;
+}
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 18rpx 0;
+  font-size: 27rpx;
+  color: #5d6d7e;
+}
+.tab.on {
+  background: #2471a3;
+  color: #ffffff;
+  font-weight: 600;
+}
+.sel-item {
+  margin-bottom: 18rpx;
+}
+.sel-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8rpx;
+}
+.sel-name {
+  font-size: 31rpx;
+  font-weight: 700;
+  color: #1a5276;
+}
