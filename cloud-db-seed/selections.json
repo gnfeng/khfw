@@ -1,0 +1,32 @@
+[
+  {
+    "studentName": "张小明",
+    "className": "三(2)班",
+    "courseId": "c001",
+    "courseName": "创意美术",
+    "selectedAt": "2026-09-01",
+    "status": "normal",
+    "substitute": null
+  },
+  {
+    "studentName": "李华",
+    "className": "四(1)班",
+    "courseId": "c002",
+    "courseName": "快乐篮球",
+    "selectedAt": "2026-09-01",
+    "status": "normal",
+    "substitute": null
+  },
+  {
+    "studentName": "王芳",
+    "className": "五(3)班",
+    "courseId": "c003",
+    "courseName": "硬笔书法",
+    "selectedAt": "2026-09-02",
+    "status": "substitute",
+    "substitute": {
+      "byCourseTeacher": "程令冈",
+      "byActualTeacher": "赵老师"
+    }
+  }
+]

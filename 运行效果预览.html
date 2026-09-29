@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>课后服务专干助手 · 运行效果预览</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    background: #cfd9e3;
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    display: flex; justify-content: center; align-items: flex-start;
+    padding: 30px 0; min-height: 100vh; color: #1b2631; font-size: 14px;
+  }
+  /* 手机壳 */
+  .phone {
+    width: 390px; height: 844px; background: #eaf2f8;
+    border-radius: 40px; box-shadow: 0 20px 60px rgba(26,82,118,.35);
+    overflow: hidden; position: relative; display: flex; flex-direction: column;
+    border: 10px solid #1b2631;
+  }
+  .statusbar {
+    height: 36px; background: #1a5276; color: #fff;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 22px; font-size: 12px; flex-shrink: 0;
+  }
+  .navbar {
+    height: 50px; background: linear-gradient(135deg,#1a5276,#2471a3);
+    color: #fff; display: flex; align-items: center; justify-content: center;
+    font-size: 17px; font-weight: 600; flex-shrink: 0; position: relative;
+  }
+  .navbar .back {
+    position: absolute; left: 14px; font-size: 22px; cursor: pointer; display: none;
+  }
+  .screen { flex: 1; overflow-y: auto; background: #eaf2f8; }
+  .page { display: none; padding: 14px 14px 16px; }
+  .page.active { display: block; }
+
+  /* 校办 header */
+  .ph { background: linear-gradient(135deg,#1a5276,#2471a3); color:#fff;
+        padding: 18px 16px; border-radius: 0 0 18px 18px; margin: -14px -14px 14px; }
+  .ph .t { font-size: 19px; font-weight: 700; }
+  .ph .s { font-size: 12px; opacity: .85; margin-top: 4px; }
+
+  /* 统计 */
+  .stats { display: flex; gap: 10px; margin-bottom: 14px; }
+  .stat { flex: 1; background: #fff; border: 1px solid #b0c4de; border-radius: 12px;
+          text-align: center; padding: 14px 0; box-shadow: 0 3px 8px rgba(26,82,118,.08); }
+  .stat b { display: block; font-size: 24px; color: #1a5276; font-weight: 700; }
+  .stat span { font-size: 12px; color: #5d6d7e; }
+
+  /* 菜单 */
+  .menu { background:#fff; border:1px solid #b0c4de; border-radius:12px; margin-bottom:12px;
+          display:flex; align-items:center; padding:14px; box-shadow:0 3px 8px rgba(26,82,118,.08); }
+  .badge { width:42px; height:42px; border-radius:50%; background:#1a5276; color:#fff;
+           font-weight:700; display:flex; align-items:center; justify-content:center; margin-right:14px; flex-shrink:0; }
+  .badge.b { background:#2471a3; } .badge.l { background:#5dade2; }
+  .menu .mt { font-size:16px; font-weight:700; color:#1a5276; }
+  .menu .ms { font-size:12px; color:#5d6d7e; margin-top:2px; }
+
+  /* 卡片 */
+  .card { background:#fff; border:1px solid #b0c4de; border-radius:12px; padding:13px 14px;
+          margin-bottom:10px; box-shadow:0 3px 8px rgba(26,82,118,.08); }
+  .card.left { border-left:5px solid #2471a3; }
+  .row { display:flex; justify-content:space-between; align-items:center; }
+  .cname { font-size:16px; font-weight:700; color:#1a5276; }
+  .tag { font-size:11px; padding:2px 9px; border-radius:11px; background:#d4e6f1; color:#1a5276; }
+  .tag.g { background:#d5f5e3; color:#1e8449; }
+  .tag.o { background:#fdebd0; color:#ca6f1e; }
+  .tag.r { background:#fadbd8; color:#c0392b; }
+  .muted { color:#5d6d7e; font-size:12px; }
+  .divider { height:1px; background:#d4e6f1; margin:10px 0; }
+  .field { display:flex; align-items:center; padding:8px 0; }
+  .field label { width:84px; color:#1a5276; font-weight:600; font-size:13px; flex-shrink:0; }
+  .field .val { flex:1; font-size:13px; }
+  input.f { border:1px solid #b0c4de; border-radius:8px; padding:7px 9px; width:100%; font-size:13px; }
+  select.f { border:1px solid #b0c4de; border-radius:8px; padding:7px 9px; width:100%; font-size:13px; background:#fff; }
+
+  .btn { background:#2471a3; color:#fff; text-align:center; padding:12px; border-radius:10px;
+         font-size:15px; margin-top:6px; cursor:pointer; }
+  .btn:active { background:#1a5276; }
+
+  /* tabs */
+  .tabs { display:flex; border:1px solid #b0c4de; border-radius:10px; overflow:hidden; margin-bottom:12px; }
+  .tab { flex:1; text-align:center; padding:9px 0; font-size:13px; color:#5d6d7e; background:#fff; cursor:pointer; }
+  .tab.on { background:#2471a3; color:#fff; font-weight:600; }
+
+  /* 底部 tabBar */
+  .tabbar { height:56px; background:#fff; border-top:1px solid #b0c4de; flex-shrink:0;
+            display:flex; }
+  .tb { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+        font-size:11px; color:#5d6d7e; cursor:pointer; }
+  .tb.on { color:#1a5276; font-weight:600; }
+  .tb .ic { font-size:20px; margin-bottom:2px; }
+
+  /* toast */
+  .toast { position:fixed; left:50%; top:48%; transform:translate(-50%,-50%);
+           background:rgba(27,38,49,.9); color:#fff; padding:12px 22px; border-radius:10px;
+           font-size:14px; display:none; z-index:99; }
+  .tip { background:#fdebd0; color:#ca6f1e; font-size:12px; padding:8px 11px; border-radius:8px; margin:6px 0; }
+  .switch { width:46px; height:26px; background:#b0c4de; border-radius:13px; position:relative; transition:.2s; }
+  .switch.on { background:#2471a3; }
+  .switch::after { content:''; position:absolute; width:22px; height:22px; background:#fff; border-radius:50%; top:2px; left:2px; transition:.2s; }
+  .switch.on::after { left:22px; }
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="statusbar"><span>9:41</span><span>广南三小 · 课后服务</span><span>📶 🔋</span></div>
+  <div class="navbar"><span class="back" id="backBtn" onclick="goBack()">‹</span><span id="navTitle">课后服务专干助手</span></div>
+  <div class="screen">
+
+    <!-- 首页 -->
+    <section class="page active" id="page-index">
+      <div class="ph"><div class="t" id="idxSchool">广南县城区第三小学校</div><div class="s">课后服务专干助手 · 数字化工作台</div></div>
+      <div class="stats">
+        <div class="stat"><b id="stC">0</b><span>课程</span></div>
+        <div class="stat"><b id="stS">0</b><span>报名</span></div>
+        <div class="stat"><b id="stN">0</b><span>通知</span></div>
+      </div>
+      <div class="menu" onclick="go('page-course-list')"><div class="badge">课</div><div><div class="mt">课程管理</div><div class="ms">特色课 / 非特色课编排</div></div></div>
+      <div class="menu" onclick="go('page-selection-list')"><div class="badge b">选</div><div><div class="mt">选课报名</div><div class="ms">报名记录 / 代课标注</div></div></div>
+      <div class="menu" onclick="go('page-notice-list')"><div class="badge l">通</div><div><div class="mt">家校通知</div><div class="ms">公告发布与查阅</div></div></div>
+      <div class="card"><div class="muted">课后服务对接人</div><div style="font-weight:600;color:#1a5276;margin-top:4px;">程令冈 18087698482</div></div>
+    </section>
+
+    <!-- 课程列表 -->
+    <section class="page" id="page-course-list">
+      <div class="ph"><div class="t">课程管理</div><div class="s">广南县城区第三小学校 · 课后服务</div></div>
+      <div id="courseList"></div>
+      <div class="btn" onclick="go('page-course-detail')">＋ 新增课程</div>
+    </section>
+
+    <!-- 课程详情 -->
+    <section class="page" id="page-course-detail">
+      <div class="ph"><div class="t" id="cdTitle">新增课程</div><div class="s">课程信息将用于选课与津贴预算</div></div>
+      <div class="card left">
+        <div class="field"><label>课程名称</label><input class="f" id="f-name" placeholder="如：创意美术"></div>
+        <div class="divider"></div>
+        <div class="field"><label>课程类型</label>
+          <select class="f" id="f-type"><option>特色课</option><option>非特色课</option></select></div>
+        <div class="divider"></div>
+        <div class="field"><label>授课教师</label><input class="f" id="f-teacher" placeholder="课表原定教师"></div>
+        <div class="divider"></div>
+        <div class="field"><label>上课地点</label><input class="f" id="f-loc" placeholder="如：美术室(二)"></div>
+        <div class="divider"></div>
+        <div class="field"><label>年级范围</label><input class="f" id="f-grade" placeholder="如：一~三年级"></div>
+        <div class="divider"></div>
+        <div class="field"><label>上课星期</label><input class="f" id="f-week" placeholder="如：周一"></div>
+        <div class="divider"></div>
+        <div class="field"><label>时段</label><input class="f" id="f-time" placeholder="如：16:30-17:30"></div>
+        <div class="divider"></div>
+        <div class="field"><label>招生容量</label><input class="f" id="f-cap" type="number" placeholder="如：30"></div>
+        <div class="divider"></div>
+        <div class="field"><label>教学周数</label><input class="f" id="f-weeks" type="number" placeholder="预算基准周数" value="16"></div>
+      </div>
+      <div class="btn" onclick="saveCourse()">保存</div>
+    </section>
+
+    <!-- 选课列表 -->
+    <section class="page" id="page-selection-list">
+      <div class="ph"><div class="t">选课 / 报名</div><div class="s">记录学生选课，代课单独标注</div></div>
+      <div class="tabs">
+        <div class="tab on" data-f="all" onclick="selFilter(this)">全部</div>
+        <div class="tab" data-f="normal" onclick="selFilter(this)">正常</div>
+        <div class="tab" data-f="substitute" onclick="selFilter(this)">代课</div>
+      </div>
+      <div id="selList"></div>
+      <div class="btn" onclick="go('page-selection-form')">＋ 新增报名</div>
+    </section>
+
+    <!-- 选课详情 -->
+    <section class="page" id="page-selection-detail">
+      <div class="ph"><div class="t">报名详情</div><div class="s">选课报名记录</div></div>
+      <div class="card left" id="selDetail"></div>
+      <div class="btn" onclick="go('page-selection-list')">返回列表</div>
+    </section>
+
+    <!-- 选课表单 -->
+    <section class="page" id="page-selection-form">
+      <div class="ph"><div class="t">新增报名</div><div class="s">代课请如实填写被代课人与代课人</div></div>
+      <div class="card left">
+        <div class="field"><label>学生姓名</label><input class="f" id="s-name" placeholder="请输入"></div>
+        <div class="divider"></div>
+        <div class="field"><label>班级</label><input class="f" id="s-class" placeholder="如：三(2)班"></div>
+        <div class="divider"></div>
+        <div class="field"><label>选择课程</label>
+          <select class="f" id="s-course"></select></div>
+        <div class="divider"></div>
+        <div class="field"><label>是否代课</label><div class="switch" id="s-switch" onclick="toggleSwitch()"></div></div>
+        <div id="subFields" style="display:none;">
+          <div class="tip">⚠️ 代课口径：被代课人填课表原定教师，代课人填实际上课教师</div>
+          <div class="field"><label>被代课人</label><input class="f" id="s-byc" placeholder="课表原定教师"></div>
+          <div class="divider"></div>
+          <div class="field"><label>代课人</label><input class="f" id="s-bya" placeholder="实际上课教师"></div>
+        </div>
+      </div>
+      <div class="btn" onclick="submitSel()">提交报名</div>
+    </section>
+
+    <!-- 通知列表 -->
+    <section class="page" id="page-notice-list">
+      <div class="ph"><div class="t">家校通知</div><div class="s">课后服务相关公告发布与查阅</div></div>
+      <div id="noticeList"></div>
+    </section>
+
+    <!-- 通知详情 -->
+    <section class="page" id="page-notice-detail">
+      <div class="ph"><div class="t" id="nTitle">通知详情</div><div class="s" id="nPub">广南三小</div></div>
+      <div class="card left" id="noticeBody"></div>
+      <div class="btn" onclick="go('page-notice-list')">返回</div>
+    </section>
+
+  </div>
+  <div class="tabbar">
+    <div class="tb on" data-page="page-index" onclick="tab(this)"><div class="ic">🏠</div>首页</div>
+    <div class="tb" data-page="page-course-list" onclick="tab(this)"><div class="ic">📚</div>课程</div>
+    <div class="tb" data-page="page-selection-list" onclick="tab(this)"><div class="ic">✅</div>选课</div>
+    <div class="tb" data-page="page-notice-list" onclick="tab(this)"><div class="ic">📢</div>通知</div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+  // ===== Mock 数据（与小程序 utils/mock.js 一致）=====
+  const courses = [
+    {id:'c001',name:'创意美术',type:'特色课',category:'艺术',teacher:'李老师',location:'美术室(二)',gradeScope:'一~三年级',capacity:30,enrolled:28,weekday:'周一',timeSlot:'16:30-17:30',weeks:16,status:'open'},
+    {id:'c002',name:'快乐篮球',type:'特色课',category:'体育',teacher:'王老师',location:'篮球场',gradeScope:'四~六年级',capacity:24,enrolled:24,weekday:'周二',timeSlot:'16:30-17:30',weeks:16,status:'full'},
+    {id:'c003',name:'硬笔书法',type:'特色课',category:'书法',teacher:'程令冈',location:'书法教室',gradeScope:'全校',capacity:36,enrolled:31,weekday:'周三',timeSlot:'16:30-17:30',weeks:16,status:'open'},
+    {id:'c004',name:'作业辅导（非特色）',type:'非特色课',category:'看护',teacher:'各班原任教师',location:'本班教室',gradeScope:'按班级',capacity:45,enrolled:40,weekday:'周一至周五',timeSlot:'16:30-17:30',weeks:18,status:'open'}
+  ];
+  const selections = [
+    {id:'s001',studentName:'张小明',className:'三(2)班',courseName:'创意美术',selectedAt:'2026-09-01',status:'normal',substitute:null},
+    {id:'s002',studentName:'李华',className:'四(1)班',courseName:'快乐篮球',selectedAt:'2026-09-01',status:'normal',substitute:null},
+    {id:'s003',studentName:'王芳',className:'五(3)班',courseName:'硬笔书法',selectedAt:'2026-09-02',status:'substitute',substitute:{byCourseTeacher:'程令冈',byActualTeacher:'赵老师'}}
+  ];
+  const notices = [
+    {id:'n001',title:'课后服务选课开始通知',level:'important',content:'各位家长：本学期课后服务选课通道已开启，请在9月5日前完成报名。特色课名额有限，先到先得。',publishAt:'2026-08-28 09:00',publisher:'广南三小教务处'},
+    {id:'n002',title:'关于开学首日（8月31日）课后服务安排的说明',level:'urgent',content:'8月31日为开学首日，无常规课表但对应周一。该时段预算归属《非特色课课程安排表》登记教师。如填报代课，被代课人填课表原定教师，代课人填实际上课教师。',publishAt:'2026-08-30 15:30',publisher:'课后服务专干 程令冈'},
+    {id:'n003',title:'同班同科目中途换人结算口径',level:'normal',content:'同一班级同一科目中途换人的，履职时间较长的一方按课表常规课时入预算；履职时间较短的一方以代课形式上报考。',publishAt:'2026-09-10 11:00',publisher:'课后服务专干 程令冈'}
+  ];
+
+  // ===== 导航 =====
+  const titles = {'page-index':'课后服务专干助手','page-course-list':'课程管理','page-course-detail':'课程详情','page-selection-list':'选课 / 报名','page-selection-detail':'报名详情','page-selection-form':'新增报名','page-notice-list':'家校通知','page-notice-detail':'通知详情'};
+  const backPages = {'page-course-detail':'page-course-list','page-selection-detail':'page-selection-list','page-selection-form':'page-selection-list','page-notice-detail':'page-notice-list'};
+  let curPage = 'page-index';
+
+  function go(p){
+    document.querySelectorAll('.page').forEach(e=>e.classList.remove('active'));
+    document.getElementById(p).classList.add('active');
+    curPage = p;
+    document.getElementById('navTitle').textContent = titles[p] || '';
+    document.getElementById('backBtn').style.display = backPages[p] ? 'block' : 'none';
+    syncTab(p);
+    if(p==='page-course-list') renderCourses();
+    if(p==='page-selection-list') renderSel('all');
+    if(p==='page-notice-list') renderNotices();
+    if(p==='page-selection-form') fillCourseOptions();
+    document.querySelector('.screen').scrollTop = 0;
+  }
+  function goBack(){
+    const t = backPages[curPage];
+    if(t) go(t);
+  }
+  function tab(el){
+    document.querySelectorAll('.tb').forEach(e=>e.classList.remove('on'));
+    el.classList.add('on');
+    go(el.dataset.page);
+  }
+  function syncTab(p){
+    const map = {'page-course-list':'page-course-list','page-course-detail':'page-course-list','page-selection-list':'page-selection-list','page-selection-detail':'page-selection-list','page-selection-form':'page-selection-list','page-notice-list':'page-notice-list','page-notice-detail':'page-notice-list','page-index':'page-index'};
+    document.querySelectorAll('.tb').forEach(e=>{
+      e.classList.toggle('on', e.dataset.page === (map[p]||p));
+    });
+  }
+
+  // ===== 渲染 =====
+  function statusTag(s){
+    if(s==='open') return '<span class="tag g">招生中</span>';
+    if(s==='full') return '<span class="tag r">满额</span>';
+    return '<span class="tag o">已结课</span>';
+  }
+  function renderCourses(){
+    const el = document.getElementById('courseList');
+    el.innerHTML = courses.map(c=>`
+      <div class="card left" onclick="openCourse('${c.id}')">
+        <div class="row"><span class="cname">${c.name}</span><span class="tag">${c.type}</span></div>
+        <div class="muted" style="margin-top:6px;">教师 ${c.teacher} · ${c.location}</div>
+        <div class="muted">${c.weekday} ${c.timeSlot}</div>
+        <div class="row" style="margin-top:8px;">
+          <span class="muted">报名 ${c.enrolled}/${c.capacity}</span>${statusTag(c.status)}
+        </div>
+      </div>`).join('');
+  }
+  function openCourse(id){
+    const c = courses.find(x=>x.id===id);
+    document.getElementById('cdTitle').textContent = '编辑课程';
+    document.getElementById('f-name').value=c.name;
+    document.getElementById('f-type').value=c.type;
+    document.getElementById('f-teacher').value=c.teacher;
+    document.getElementById('f-loc').value=c.location;
+    document.getElementById('f-grade').value=c.gradeScope;
+    document.getElementById('f-week').value=c.weekday;
+    document.getElementById('f-time').value=c.timeSlot;
+    document.getElementById('f-cap').value=c.capacity;
+    document.getElementById('f-weeks').value=c.weeks;
+    go('page-course-detail');
+  }
+  function saveCourse(){
+    if(!document.getElementById('f-name').value){ toast('请填写课程名称'); return; }
+    toast('已保存（演示）'); setTimeout(()=>go('page-course-list'),900);
+  }
+
+  function selFilter(el){
+    document.querySelectorAll('#page-selection-list .tab').forEach(t=>t.classList.remove('on'));
+    el.classList.add('on');
+    renderSel(el.dataset.f);
+  }
+  function renderSel(f){
+    const list = f==='all'? selections : selections.filter(s=>s.status===f);
+    document.getElementById('selList').innerHTML = list.map(s=>`
+      <div class="card left" onclick="openSel('${s.id}')">
+        <div class="row"><span class="cname">${s.studentName}</span>
+          <span class="tag ${s.status==='substitute'?'o':'g'}">${s.status==='substitute'?'代课':'正常'}</span></div>
+        <div class="muted">${s.className} · ${s.courseName}</div>
+        ${s.status==='substitute'&&s.substitute?`<div class="muted">被代课人：${s.substitute.byCourseTeacher} → 代课人：${s.substitute.byActualTeacher}</div>`:''}
+        <div class="muted">报名：${s.selectedAt}</div>
+      </div>`).join('');
+  }
+  function openSel(id){
+    const s = selections.find(x=>x.id===id);
+    let html = `<div class="field"><label>学生</label><div class="val">${s.studentName}</div></div><div class="divider"></div>
+      <div class="field"><label>班级</label><div class="val">${s.className}</div></div><div class="divider"></div>
+      <div class="field"><label>课程</label><div class="val">${s.courseName}</div></div><div class="divider"></div>
+      <div class="field"><label>状态</label><div class="val"><span class="tag ${s.status==='substitute'?'o':'g'}">${s.status==='substitute'?'代课':'正常'}</span></div></div>`;
+    if(s.status==='substitute'&&s.substitute){
+      html += `<div class="divider"></div><div class="field"><label>被代课人</label><div class="val">${s.substitute.byCourseTeacher}</div></div>
+        <div class="divider"></div><div class="field"><label>代课人</label><div class="val">${s.substitute.byActualTeacher}</div></div>`;
+    }
+    html += `<div class="divider"></div><div class="field"><label>报名日期</label><div class="val">${s.selectedAt}</div></div>`;
+    document.getElementById('selDetail').innerHTML = html;
+    go('page-selection-detail');
+  }
+  function fillCourseOptions(){
+    document.getElementById('s-course').innerHTML = courses.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+  }
+  function toggleSwitch(){
+    const sw = document.getElementById('s-switch');
+    sw.classList.toggle('on');
+    document.getElementById('subFields').style.display = sw.classList.contains('on')?'block':'none';
+  }
+  function submitSel(){
+    if(!document.getElementById('s-name').value || !document.getElementById('s-class').value){
+      toast('请补全学生/班级'); return;
+    }
+    const isSub = document.getElementById('s-switch').classList.contains('on');
+    if(isSub && (!document.getElementById('s-byc').value || !document.getElementById('s-bya').value)){
+      toast('代课需填被代课人+代课人'); return;
+    }
+    toast('报名成功（演示）'); setTimeout(()=>go('page-selection-list'),900);
+  }
+
+  function renderNotices(){
+    document.getElementById('noticeList').innerHTML = notices.map(n=>{
+      const lv = n.level==='urgent'?'r':(n.level==='important'?'o':'');
+      const txt = n.level==='urgent'?'紧急':(n.level==='important'?'重要':'普通');
+      return `<div class="card left" onclick="openNotice('${n.id}')">
+        <div class="row"><span class="cname" style="font-size:15px;">${n.title}</span><span class="tag ${lv}">${txt}</span></div>
+        <div class="muted" style="margin-top:6px;">${n.publisher} · ${n.publishAt}</div></div>`;
+    }).join('');
+  }
+  function openNotice(id){
+    const n = notices.find(x=>x.id===id);
+    const lv = n.level==='urgent'?'r':(n.level==='important'?'o':'');
+    const txt = n.level==='urgent'?'紧急':(n.level==='important'?'重要':'普通');
+    document.getElementById('nTitle').textContent = n.title;
+    document.getElementById('nPub').textContent = n.publisher;
+    document.getElementById('noticeBody').innerHTML =
+      `<span class="tag ${lv}">${txt}</span><div style="margin-top:10px;line-height:1.9;white-space:pre-wrap;">${n.content}</div>
+       <div class="divider"></div><div class="muted">发布时间：${n.publishAt}</div><div class="muted">发布人：${n.publisher}</div>`;
+    go('page-notice-detail');
+  }
+
+  // ===== 首页统计 =====
+  document.getElementById('stC').textContent = courses.length;
+  document.getElementById('stS').textContent = selections.length;
+  document.getElementById('stN').textContent = notices.length;
+
+  function toast(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.style.display='block';
+    setTimeout(()=>t.style.display='none',1400);
+  }
+</script>
+</body>
+</html>

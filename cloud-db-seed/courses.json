@@ -1,0 +1,58 @@
+[
+  {
+    "name": "创意美术",
+    "type": "特色课",
+    "category": "艺术",
+    "teacher": "李老师",
+    "location": "美术室(二)",
+    "gradeScope": "一~三年级",
+    "capacity": 30,
+    "enrolled": 28,
+    "weekday": "周一",
+    "timeSlot": "16:30-17:30",
+    "weeks": 16,
+    "status": "open"
+  },
+  {
+    "name": "快乐篮球",
+    "type": "特色课",
+    "category": "体育",
+    "teacher": "王老师",
+    "location": "篮球场",
+    "gradeScope": "四~六年级",
+    "capacity": 24,
+    "enrolled": 24,
+    "weekday": "周二",
+    "timeSlot": "16:30-17:30",
+    "weeks": 16,
+    "status": "full"
+  },
+  {
+    "name": "硬笔书法",
+    "type": "特色课",
+    "category": "书法",
+    "teacher": "程令冈",
+    "location": "书法教室",
+    "gradeScope": "全校",
+    "capacity": 36,
+    "enrolled": 31,
+    "weekday": "周三",
+    "timeSlot": "16:30-17:30",
+    "weeks": 16,
+    "status": "open"
+  },
+  {
+    "name": "作业辅导（非特色）",
+    "type": "非特色课",
+    "category": "看护",
+    "teacher": "各班原任教师",
+    "location": "本班教室",
+    "gradeScope": "按班级",
+    "capacity": 45,
+    "enrolled": 40,
+    "weekday": "周一至周五",
+    "timeSlot": "16:30-17:30",
+    "weeks": 18,
+    "status": "open"
+  }
+]

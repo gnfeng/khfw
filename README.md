@@ -23,8 +23,9 @@
 
 ```
 afterschool-helper/
-├── project.config.json        # 小程序项目配置（appid 现为 touristappid，请替换）
+├── project.config.json        # 小程序项目配置（appid 已填真实 AppID，请勿外泄）
 ├── app.js / app.json / app.wxss / sitemap.json
+├── cloud-db-seed/             # 云开发数据库初始数据（courses / selections / notices 三个集合）
 ├── components/
 │   └── course-card/           # 课程卡片组件
 ├── pages/
@@ -61,13 +62,18 @@ afterschool-helper/
 
 ---
 
-## 五、接入后端 / 云开发
+## 五、接入微信云开发（CloudBase）
 
-当前 `utils/api.js` 的 `USE_REMOTE = false`，数据走本地 Mock。接入真实后端时：
+当前 `utils/api.js` 的 `USE_REMOTE = false`，数据走本地 Mock，打开即用。接入云开发（推荐，免自有服务器与域名备案）：
 
-1. 将 `USE_REMOTE` 改为 `true`，填写 `BASE_URL`（或云函数名）。
-2. 实现 `wxRequest` 内的接口路径（`/courses`、`/selections`、`/notices` 等）。
-3. 删除 `utils/mock.js` 依赖即可，页面调用方式不变。
+1. 微信开发者工具顶部点 **「云开发」** → 开通（首次会创建环境，记下 **环境 ID**）。
+2. 在云开发控制台 **数据库** 中新建集合：`courses`、`selections`、`notices`。
+3. 将 `cloud-db-seed/` 下三个 JSON 分别**导入**对应集合，得到初始课程/选课/通知数据。
+4. 设置集合权限：内部工具建议「仅创建者可读写」或「所有用户可读，仅创建者可读写」（在集合「权限设置」里改）。
+5. 把 `utils/api.js` 顶部 `CLOUD_ENV` 填为你的环境 ID，`USE_REMOTE` 改为 `true`；同时把 `app.js` 的 `globalData.cloudEnv`、`useRemote` 同步修改。
+6. 重新编译，数据即走云端；页面调用方式不变。
+
+> 接好后 `utils/mock.js` 可保留（仅本地预览时用到），不影响线上。
 
 ---
 
